@@ -1,0 +1,12 @@
+version: "2.1"
+services:
+
+  loan_api:
+    container_name: loan_api_local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    working_dir: /usr/app/src
+    restart: always

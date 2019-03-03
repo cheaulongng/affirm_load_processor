@@ -1,8 +1,8 @@
-from models import LoanAssignment, FacilityYield
-from utils import *
+from models.models import LoanAssignment, FacilityYield
+from common.utils import *
 
 
-class LoanProcessor(object):
+class LoanService(object):
 
     def __init__(self, facilities, covenants):
         self.facilities = facilities
@@ -12,6 +12,9 @@ class LoanProcessor(object):
 
     def process_loan(self, loan):
         try:
+            if not loan:
+                return
+
             facility_id, interest_rate = self._find_facility(loan)
 
             if not facility_id:
@@ -56,7 +59,7 @@ class LoanProcessor(object):
                                                         interest_rate)
 
         loan_asignment = LoanAssignment()
-        loan_asignment.loan_id = loan.id
+        loan_asignment.loan_id = loan.loan_id
         loan_asignment.facility_id = facility_id
         loan_asignment.expected_yield = expected_yield
 

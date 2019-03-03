@@ -1,3 +1,5 @@
 pip
 python-dateutil
 setuptools
+flask
+flask-restful

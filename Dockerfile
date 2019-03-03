@@ -6,4 +6,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . .
 WORKDIR /usr/app/src
 
-CMD ["python", "process_loans.py"]
+CMD ["python", "api_server.py"]

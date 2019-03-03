@@ -15,10 +15,10 @@ Example:
 import csv
 import os
 import sys
-from loan_processor import LoanProcessor
-from models import Loan
-from finance_data import load_facilities, load_covenants
-from utils import *
+from services.loan_service import LoanService
+from models.models import Loan
+from services.finance_data import load_facilities, load_covenants
+from common.utils import *
 
 
 log = get_logger(__name__)
@@ -40,7 +40,7 @@ def process_all_loans(filename):
         covenants = load_covenants(path)
 
         # Process loans
-        processor = LoanProcessor(facilities, covenants)
+        processor = LoanService(facilities, covenants)
         reader = csv.DictReader(open(filename, 'r'))
         loan_assignments = []
 
@@ -97,7 +97,7 @@ def _generate_facility_yields_output_file(facility_yields, path):
 if __name__ == '__main__':
     try:
         # Default file
-        filename = get_file_name(DEFAULT_LOAN_FILE, 'files')
+        filename = get_file_name(DEFAULT_LOAN_FILE, 'data_files')
 
         # Get loan file from command argument
         args = sys.argv

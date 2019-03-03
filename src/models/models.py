@@ -1,3 +1,6 @@
+'''
+For convenience we put all models into a single file. We could separate into separate files
+'''
 
 
 class Bank(object):

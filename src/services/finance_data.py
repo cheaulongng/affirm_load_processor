@@ -1,6 +1,6 @@
 import csv
-from models import Bank, Facility, Covenant
-from utils import *
+from models.models import Bank, Facility, Covenant
+from common.utils import *
 
 log = get_logger(__name__)
 
