@@ -90,8 +90,8 @@ def _generate_facility_yields_output_file(facility_yields, path):
         writer = csv.writer(csvfile)
         writer.writerow(['facility_id', 'expected_yield'])
 
-        for facility_yield in facility_yields:
-            writer.writerow([facility_yield.facility_id, facility_yield.expected_yield])
+        for key, facility_yield in facility_yields.items():
+            writer.writerow([facility_yield.facility_id, to_int(facility_yield.expected_yield)])
 
 
 if __name__ == '__main__':

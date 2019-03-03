@@ -1,6 +1,5 @@
 from models import LoanAssignment, FacilityYield
 from utils import *
-import pandas
 
 
 class LoanProcessor(object):
@@ -8,7 +7,7 @@ class LoanProcessor(object):
     def __init__(self, facilities, covenants):
         self.facilities = facilities
         self.covenants = covenants
-        self._facility_yields = []
+        self._facility_yields = {}
         self.log = get_logger(__name__)
 
     def process_loan(self, loan):
@@ -27,28 +26,24 @@ class LoanProcessor(object):
         return loan_assignment
 
     def get_facility_yields(self):
-
-        if not self._facility_yields:
-            return
-
-        df = pandas.DataFrame(self._facility_yields, columns=['facility_id', 'expected_yield'])
-        aggr = df.groupby(['facility_id']).sum()
-
-        facility_yields = []
-        for item in aggr.iterrows():
-
-            facility_yield = FacilityYield()
-            facility_yield.facility_id = item[0]
-            facility_yield.expected_yield = int(item[1].values[0])
-            facility_yields.append(facility_yield)
-
-        return facility_yields
+        return self._facility_yields
 
     # =====================
     # PRIVATE FUNCTIONS
     # =====================
     def _add_to_facility_yield(self, loan_assignment):
-        self._facility_yields.append([loan_assignment.facility_id, loan_assignment.expected_yield])
+
+        key = str(loan_assignment.facility_id)
+        facility_yield = self._facility_yields.get(key)
+
+        if facility_yield:
+            facility_yield.expected_yield += loan_assignment.expected_yield
+        else:
+            facility_yield = FacilityYield()
+            facility_yield.facility_id = loan_assignment.facility_id
+            facility_yield.expected_yield = loan_assignment.expected_yield
+
+            self._facility_yields.update({key: facility_yield})
 
     def _get_loan_assignment(self, loan, facility_id, interest_rate):
 
