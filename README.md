@@ -1,4 +1,4 @@
-#Affirm Loan Processor
+# Affirm Loan Processor
 
 This program will consume loans from the stream (loan.csv) and assign each loan to a funding facility while
 respecting each facility's covenants. Once the program finishes the process, it will generate two output files
