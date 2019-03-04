@@ -1,8 +1,8 @@
 # Affirm Loan Processor
 
-This program will consume loans from the stream (loan.csv) and assign each loan to a funding facility while
-respecting each facility's covenants. Once the program finishes the process, it will generate two output files
-assignments.csv, and yields.csv
+This program will consume loans from the stream (loans.csv) and assign each loan to a funding facility while
+respecting each facility's covenants. Once the program finishes the process, it will generate two output files -
+assignments.csv and yields.csv
 
 
 ```
@@ -46,9 +46,9 @@ Example:
 ```
 ng-mac:src cheau$ python process_loans.py data_files/small/loans.csv
 2019-03-03 00:01:41,587 - INFO - START Processing Loans
-2019-03-03 00:01:41,587 - INFO - Process loan_id: None, funded facility_id: 1
-2019-03-03 00:01:41,587 - INFO - Process loan_id: None, funded facility_id: 2
-2019-03-03 00:01:41,587 - INFO - Process loan_id: None, funded facility_id: 1
+2019-03-03 00:01:41,587 - INFO - Process loan_id: 1, funded facility_id: 1
+2019-03-03 00:01:41,587 - INFO - Process loan_id: 2, funded facility_id: 2
+2019-03-03 00:01:41,587 - INFO - Process loan_id: 3, funded facility_id: 1
 2019-03-03 00:01:41,587 - INFO - Generate assignments.csv
 2019-03-03 00:01:41,587 - INFO - Generate yields.csv
 2019-03-03 00:01:41,588 - INFO - END Processing Loans
