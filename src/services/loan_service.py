@@ -21,7 +21,8 @@ class LoanService(object):
                 return
 
             loan_assignment = self._get_loan_assignment(loan, facility_id, interest_rate)
-            self._add_to_facility_yield(loan_assignment)
+            if loan_assignment:
+                self._add_to_facility_yield(loan_assignment)
 
         except Exception as e:
             self.log.error(e)
@@ -80,6 +81,9 @@ class LoanService(object):
                     if cheapest_interest is None or interest < cheapest_interest:
                         cheapest_interest = interest
                         found_facility = facility
+
+        if found_facility is None:
+            return None, None
 
         found_facility.amount -= loan.amount
 

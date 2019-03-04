@@ -31,7 +31,7 @@ assignments.csv, and yields.csv
 
 ## Run "process_loans.py" script
 
-Change the director to "src" so it's the working directory, then run command below:
+Change the working directory to "src", then run command below:
 
 ```
 python process_loans.py data_files/loans.csv

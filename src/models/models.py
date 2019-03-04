@@ -17,6 +17,7 @@ class Facility(object):
         self.interest_rate = None
         self.default_likelihood = None
         self.state = None
+        self.covenants = []
 
 
 class Covenant(object):
@@ -25,6 +26,7 @@ class Covenant(object):
         self.facility_id = None
         self.max_default_likelihood = None
         self.banned_states = []
+        self.min_credit_score = None
 
 
 class Loan(object):

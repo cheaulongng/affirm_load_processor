@@ -30,9 +30,7 @@ DEFAULT_LOAN_FILE = 'loans.csv'
 
 
 def process_all_loans(filename):
-
     try:
-
         path = os.path.dirname(filename)
 
         # Preload finance data for loan processing
@@ -48,22 +46,23 @@ def process_all_loans(filename):
 
         for line in reader:
             loan = Loan()
-            loan.id = to_int(line['id'])
+            loan.loan_id = to_int(line['id'])
             loan.amount = to_int(line['amount'])
             loan.interest_rate = to_float(line['interest_rate'])
             loan.default_likelihood = to_float(line['default_likelihood'])
             loan.state = line['state']
 
             loan_assignment = processor.process_loan(loan)
-            loan_assignments.append(loan_assignment)
+            if loan_assignment:
+                loan_assignments.append(loan_assignment)
 
-            log.info('Process loan_id: {0}, funded facility_id: {1}'.format(loan_assignment.loan_id, loan_assignment.facility_id))
+                log.info('Process loan_id: {0}, funded facility_id: {1}, expected_yield: {2}'
+                         .format(loan_assignment.loan_id,
+                                 loan_assignment.facility_id,
+                                 to_int(loan_assignment.expected_yield)))
 
         # Generate output files
-        log.info('Generate assignments.csv')
         _generate_assignments_output_file(loan_assignments, 'output')
-
-        log.info('Generate yields.csv')
         _generate_facility_yields_output_file(processor.get_facility_yields(), 'output')
 
         log.info('END Processing Loans')
@@ -82,6 +81,8 @@ def _generate_assignments_output_file(assignments, path):
         for assignment in assignments:
             writer.writerow([assignment.loan_id, assignment.facility_id])
 
+    log.info('Generate {}'.format(filename))
+
 
 def _generate_facility_yields_output_file(facility_yields, path):
     filename = get_file_name(YIELDS_FILENAME, path)
@@ -92,6 +93,8 @@ def _generate_facility_yields_output_file(facility_yields, path):
 
         for key, facility_yield in facility_yields.items():
             writer.writerow([facility_yield.facility_id, to_int(facility_yield.expected_yield)])
+
+    log.info('Generate {}'.format(filename))
 
 
 if __name__ == '__main__':
